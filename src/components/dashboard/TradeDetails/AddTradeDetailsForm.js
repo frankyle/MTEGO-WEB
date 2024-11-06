@@ -1,10 +1,9 @@
-// AddTradeDetailsForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import './AddTradeDetailsForm.css';
 
 const AddTradeDetailsForm = ({ onClose }) => {
-    const [newTradeData, setNewTradeData] = useState({
-        user: '', // Assuming you'll handle user ID separately
+    const [formData, setFormData] = useState({
         currency_pair: '',
         trade_signal: '',
         is_active: false,
@@ -19,117 +18,130 @@ const AddTradeDetailsForm = ({ onClose }) => {
         take_profit_two_candle: null,
     });
 
-    const handleInputChange = (e) => {
-        const { name, value, type, files } = e.target;
-        if (type === 'file') {
-            setNewTradeData({ ...newTradeData, [name]: files[0] });
+    const handleChange = (e) => {
+        const { name, value, type, checked, files } = e.target;
+        if (type === 'checkbox') {
+            setFormData({ ...formData, [name]: checked });
+        } else if (type === 'file') {
+            setFormData({ ...formData, [name]: files[0] });
         } else {
-            setNewTradeData({ ...newTradeData, [name]: value });
+            setFormData({ ...formData, [name]: value });
         }
     };
 
-    const handleAdd = async () => {
-        const formData = new FormData();
-        for (const key in newTradeData) {
-            formData.append(key, newTradeData[key]);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const token = localStorage.getItem('token');
+        const data = new FormData();
+
+        for (const key in formData) {
+            if (formData[key]) {
+                data.append(key, formData[key]);
+            }
         }
 
         try {
-            await axios.post('http://127.0.0.1:8000/api/tradedetails/tradedetails/', formData, {
+            await axios.post('http://127.0.0.1:8000/api/tradedetails/tradedetails/', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${token}`,
                 },
             });
             onClose();
         } catch (error) {
-            console.error("Error adding new trade:", error);
+            console.error('Error adding new trade detail:', error);
         }
     };
 
     return (
-        <div>
-            <h2>Add New Trade</h2>
-            <input
-                type="text"
-                name="currency_pair"
-                value={newTradeData.currency_pair}
-                onChange={handleInputChange}
-                placeholder="Currency Pair"
-            />
-            <select
-                name="trade_signal"
-                value={newTradeData.trade_signal}
-                onChange={handleInputChange}
-            >
-                <option value="">Select Trade Signal</option>
-                <option value="BUYS">BUYS</option>
-                <option value="SELLS">SELLS</option>
-            </select>
-            <label>
-                <input
-                    type="checkbox"
-                    name="is_active"
-                    checked={newTradeData.is_active}
-                    onChange={(e) => setNewTradeData({ ...newTradeData, is_active: e.target.checked })}
-                />
-                Is Active
-            </label>
-            <input
-                type="file"
-                name="idea_candle"
-                onChange={handleInputChange}
-                placeholder="Idea Candle"
-            />
-            <input
-                type="file"
-                name="line_graph_candle"
-                onChange={handleInputChange}
-                placeholder="Line Graph Candle"
-            />
-            <input
-                type="file"
-                name="signal_candle"
-                onChange={handleInputChange}
-                placeholder="Signal Candle"
-            />
-            <input
-                type="file"
-                name="hour_candle"
-                onChange={handleInputChange}
-                placeholder="Hour Candle"
-            />
-            <input
-                type="file"
-                name="two_hour_candle"
-                onChange={handleInputChange}
-                placeholder="Two Hour Candle"
-            />
-            <input
-                type="file"
-                name="entry_candle"
-                onChange={handleInputChange}
-                placeholder="Entry Candle"
-            />
-            <input
-                type="file"
-                name="breakeven_candle"
-                onChange={handleInputChange}
-                placeholder="Breakeven Candle"
-            />
-            <input
-                type="file"
-                name="take_profit_one_candle"
-                onChange={handleInputChange}
-                placeholder="Take Profit One Candle"
-            />
-            <input
-                type="file"
-                name="take_profit_two_candle"
-                onChange={handleInputChange}
-                placeholder="Take Profit Two Candle"
-            />
-            <button onClick={handleAdd}>Add</button>
-            <button onClick={onClose}>Cancel</button>
+        <div className="modal-overlay">
+            <div className="modal-content">
+                <form onSubmit={handleSubmit} className="trade-details-form">
+                    <h2>Add Trade Detail</h2>
+                    
+                    <div className="form-grid">
+                        <div className="form-group">
+                            <label>Currency Pair</label>
+                            <input
+                                type="text"
+                                name="currency_pair"
+                                value={formData.currency_pair}
+                                onChange={handleChange}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Trade Signal</label>
+                            <select name="trade_signal" value={formData.trade_signal} onChange={handleChange}>
+                                <option value="">Select Signal</option>
+                                <option value="BUYS">BUYS</option>
+                                <option value="SELLS">SELLS</option>
+                            </select>
+                        </div>
+
+                        <div className="form-group">
+                            <label>Active</label>
+                            <input
+                                type="checkbox"
+                                name="is_active"
+                                checked={formData.is_active}
+                                onChange={handleChange}
+                            />
+                        </div>
+
+                        {/* Image fields */}
+                        <div className="form-group">
+                            <label>Idea Candle</label>
+                            <input type="file" name="idea_candle" onChange={handleChange} />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Line Graph Candle</label>
+                            <input type="file" name="line_graph_candle" onChange={handleChange} />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Signal Candle</label>
+                            <input type="file" name="signal_candle" onChange={handleChange} />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Hour Candle</label>
+                            <input type="file" name="hour_candle" onChange={handleChange} />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Two Hour Candle</label>
+                            <input type="file" name="two_hour_candle" onChange={handleChange} />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Entry Candle</label>
+                            <input type="file" name="entry_candle" onChange={handleChange} />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Breakeven Candle</label>
+                            <input type="file" name="breakeven_candle" onChange={handleChange} />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Take Profit 1</label>
+                            <input type="file" name="take_profit_one_candle" onChange={handleChange} />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Take Profit 2</label>
+                            <input type="file" name="take_profit_two_candle" onChange={handleChange} />
+                        </div>
+                    </div>
+
+                    <div className="form-buttons">
+                        <button type="submit">Save Trade Detail</button>
+                        <button type="button" onClick={onClose}>Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

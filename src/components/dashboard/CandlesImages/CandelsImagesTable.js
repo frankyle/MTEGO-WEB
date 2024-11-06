@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import AddCandleImage from './AddCandleImage'; // Import the new component
+import {
+    Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+    Typography, Modal, IconButton
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import AddCandleImage from './AddCandleImage';
+import './CandleImagesTable.css';
 
 const CandleImagesTable = () => {
     const [candleImages, setCandleImages] = useState([]);
-    const [showAddForm, setShowAddForm] = useState(false); // State to manage showing the form
+    const [showAddForm, setShowAddForm] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [openModal, setOpenModal] = useState(false);
 
     useEffect(() => {
         const fetchCandleImages = async () => {
             try {
-                const token = localStorage.getItem('token'); 
+                const token = localStorage.getItem('token');
                 const response = await axios.get('http://127.0.0.1:8000/api/candleimages/candleimages/', {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -30,91 +38,159 @@ const CandleImagesTable = () => {
 
     const handleFormClose = () => {
         setShowAddForm(false);
-        // Optionally fetch candle images again after adding
+        // Fetch candle images again after adding, if needed
         // fetchCandleImages();
     };
 
+    const handleImageClick = (imageSrc) => {
+        setSelectedImage(imageSrc);
+        setOpenModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+        setSelectedImage(null);
+    };
+
     return (
-        <div style={styles.container}>
-            <h1 style={styles.heading}>CANDLE IMAGES</h1>
-            <button style={styles.addButton} onClick={handleAddButtonClick}>Add Candle Image</button>
-            {showAddForm && <AddCandleImage onClose={handleFormClose} />} {/* Show the form when needed */}
-            <table style={styles.table}>
-                <thead>
-                    <tr>
-                        <th style={styles.th}>Currency Pair</th>
-                        <th style={styles.th}>Monday Candle</th>
-                        <th style={styles.th}>Tuesday Candle</th>
-                        <th style={styles.th}>Wednesday Candle</th>
-                        <th style={styles.th}>Thursday Candle</th>
-                        <th style={styles.th}>Friday Candle</th>
-                        <th style={styles.th}>Saturday Candle</th>
-                        <th style={styles.th}>Sunday Candle</th>
-                        <th style={styles.th}>Swing Trade Candle</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {candleImages.map((candleImage) => (
-                        <tr key={candleImage.id}>
-                            <td style={styles.td}>{candleImage.currency_pair || '-'}</td>
-                            <td style={styles.td}><img src={candleImage.monday_candle} alt="Monday Candle" style={styles.avatar} /></td>
-                            <td style={styles.td}><img src={candleImage.tuesday_candle} alt="Tuesday Candle" style={styles.avatar} /></td>
-                            <td style={styles.td}><img src={candleImage.wednesday_candle} alt="Wednesday Candle" style={styles.avatar} /></td>
-                            <td style={styles.td}><img src={candleImage.thursday_candle} alt="Thursday Candle" style={styles.avatar} /></td>
-                            <td style={styles.td}><img src={candleImage.friday_candle} alt="Friday Candle" style={styles.avatar} /></td>
-                            <td style={styles.td}><img src={candleImage.saturday_candle} alt="Saturday Candle" style={styles.avatar} /></td>
-                            <td style={styles.td}><img src={candleImage.sunday_candle} alt="Sunday Candle" style={styles.avatar} /></td>
-                            <td style={styles.td}><img src={candleImage.swing_trade_candle} alt="Swing Trade Candle" style={styles.avatar} /></td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <div className="container">
+            <Typography
+                variant="h4"
+                className="heading"
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    marginBottom: '20px'
+                }}
+            >
+                CANDLE IMAGES
+            </Typography>
+            {showAddForm && <AddCandleImage onClose={handleFormClose} />}
+            <TableContainer className="table-container">
+                <Table>
+                    <TableHead className="table-head">
+                        <TableRow>
+                            <TableCell>Currency Pair</TableCell>
+                            <TableCell>Monday Candle</TableCell>
+                            <TableCell>Tuesday Candle</TableCell>
+                            <TableCell>Wednesday Candle</TableCell>
+                            <TableCell>Thursday Candle</TableCell>
+                            <TableCell>Friday Candle</TableCell>
+                            <TableCell>Saturday Candle</TableCell>
+                            <TableCell>Sunday Candle</TableCell>
+                            <TableCell>Swing Trade Candle</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {candleImages.map((candleImage) => (
+                            <TableRow key={candleImage.id}>
+                                <TableCell className="cell">{candleImage.currency_pair || '-'}</TableCell>
+                                <TableCell className="cell">
+                                    <img
+                                        src={candleImage.monday_candle}
+                                        alt="Monday Candle"
+                                        className="image"
+                                        onClick={() => handleImageClick(candleImage.monday_candle)}
+                                    />
+                                </TableCell>
+                                <TableCell className="cell">
+                                    <img
+                                        src={candleImage.tuesday_candle}
+                                        alt="Tuesday Candle"
+                                        className="image"
+                                        onClick={() => handleImageClick(candleImage.tuesday_candle)}
+                                    />
+                                </TableCell>
+                                <TableCell className="cell">
+                                    <img
+                                        src={candleImage.wednesday_candle}
+                                        alt="Wednesday Candle"
+                                        className="image"
+                                        onClick={() => handleImageClick(candleImage.wednesday_candle)}
+                                    />
+                                </TableCell>
+                                <TableCell className="cell">
+                                    <img
+                                        src={candleImage.thursday_candle}
+                                        alt="Thursday Candle"
+                                        className="image"
+                                        onClick={() => handleImageClick(candleImage.thursday_candle)}
+                                    />
+                                </TableCell>
+                                <TableCell className="cell">
+                                    <img
+                                        src={candleImage.friday_candle}
+                                        alt="Friday Candle"
+                                        className="image"
+                                        onClick={() => handleImageClick(candleImage.friday_candle)}
+                                    />
+                                </TableCell>
+                                <TableCell className="cell">
+                                    <img
+                                        src={candleImage.saturday_candle}
+                                        alt="Saturday Candle"
+                                        className="image"
+                                        onClick={() => handleImageClick(candleImage.saturday_candle)}
+                                    />
+                                </TableCell>
+                                <TableCell className="cell">
+                                    <img
+                                        src={candleImage.sunday_candle}
+                                        alt="Sunday Candle"
+                                        className="image"
+                                        onClick={() => handleImageClick(candleImage.sunday_candle)}
+                                    />
+                                </TableCell>
+                                <TableCell className="cell">
+                                    <img
+                                        src={candleImage.swing_trade_candle}
+                                        alt="Swing Trade Candle"
+                                        className="image"
+                                        onClick={() => handleImageClick(candleImage.swing_trade_candle)}
+                                    />
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
+            <Modal open={openModal} onClose={handleCloseModal}>
+                <div
+                    className="modal-content"
+                    style={{
+                        width: '80%',
+                        height: '80%',
+                        margin: 'auto',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: '#fff',
+                        borderRadius: '8px',
+                        padding: '20px',
+                        outline: 'none',
+                    }}
+                >
+                    <IconButton
+                        className="close-button"
+                        onClick={handleCloseModal}
+                        style={{ position: 'absolute', top: '10px', right: '10px' }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                    <img
+                        src={selectedImage}
+                        alt="Selected"
+                        style={{ width: '100%', height: '100%', borderRadius: '8px', objectFit: 'contain' }}
+                    />
+                </div>
+            </Modal>
         </div>
     );
-};
-
-// CSS-in-JS styling
-const styles = {
-    container: {
-        width: '90%',
-        margin: '0 auto',
-        textAlign: 'center',
-    },
-    heading: {
-        margin: '20px 0',
-        fontSize: '24px',
-    },
-    addButton: {
-        marginBottom: '20px',
-        padding: '10px 20px',
-        fontSize: '16px',
-        backgroundColor: '#4CAF50',
-        color: 'white',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer',
-    },
-    table: {
-        width: '100%',
-        borderCollapse: 'collapse',
-        marginTop: '20px',
-    },
-    th: {
-        padding: '12px',
-        border: '1px solid #ddd',
-        backgroundColor: '#f2f2f2',
-        fontWeight: 'bold',
-    },
-    td: {
-        padding: '12px',
-        border: '1px solid #ddd',
-    },
-    avatar: {
-        width: '50px',
-        height: '50px',
-        borderRadius: '50%',
-        objectFit: 'cover',
-    },
 };
 
 export default CandleImagesTable;

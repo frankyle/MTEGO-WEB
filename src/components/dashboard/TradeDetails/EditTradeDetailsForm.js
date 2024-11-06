@@ -1,199 +1,145 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './AddTradeDetailsForm.css';
 
-const EditTradeDetails = ({ tradeId }) => {
-    const [currencyPair, setCurrencyPair] = useState('');
-    const [tradeSignal, setTradeSignal] = useState('');
-    const [isActive, setIsActive] = useState(false);
-    const [ideaCandle, setIdeaCandle] = useState(null);
-    const [lineGraphCandle, setLineGraphCandle] = useState(null);
-    const [signalCandle, setSignalCandle] = useState(null);
-    const [hourCandle, setHourCandle] = useState(null);
-    const [entryCandle, setEntryCandle] = useState(null);
-    const [takeProfitOneCandle, setTakeProfitOneCandle] = useState(null);
-    const [takeProfitTwoCandle, setTakeProfitTwoCandle] = useState(null);
+const EditTradeDetailsForm = ({ id, onClose }) => {
+    const [formData, setFormData] = useState({
+        currency_pair: '',
+        trade_signal: '',
+        is_active: false,
+        idea_candle: null,
+        line_graph_candle: null,
+        signal_candle: null,
+        hour_candle: null,
+        two_hour_candle: null,
+        entry_candle: null,
+        breakeven_candle: null,
+        take_profit_one_candle: null,
+        take_profit_two_candle: null,
+    });
 
-    // Fetch trade details on component mount
+    // Fetch data for the selected trade detail on component mount
     useEffect(() => {
-        const fetchTradeDetails = async () => {
+        const fetchTradeDetail = async () => {
+            if (!id) return;  // Ensure there's an ID to fetch
+            const token = localStorage.getItem('token');
             try {
-                const token = localStorage.getItem('token');
-                const response = await axios.get(`http://127.0.0.1:8000/api/tradedetails/tradedetails/${tradeId}/`, {
+                const response = await axios.get(`http://127.0.0.1:8000/api/tradedetails/tradedetails/${id}/`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                const data = response.data;
-                setCurrencyPair(data.currency_pair);
-                setTradeSignal(data.trade_signal);
-                setIsActive(data.is_active);
-                // Note: We do not pre-fill file inputs, as the current images can't be displayed directly in a file input
+                setFormData(response.data);
             } catch (error) {
-                console.error('Error fetching trade details:', error);
+                console.error('Error fetching trade detail:', error);
             }
         };
 
-        if (tradeId) {
-            fetchTradeDetails();
+        fetchTradeDetail();
+    }, [id]);
+
+    const handleChange = (e) => {
+        const { name, value, type, checked, files } = e.target;
+        if (type === 'checkbox') {
+            setFormData({ ...formData, [name]: checked });
+        } else if (type === 'file') {
+            setFormData({ ...formData, [name]: files[0] });
+        } else {
+            setFormData({ ...formData, [name]: value });
         }
-    }, [tradeId]);
+    };
 
-    // Handle form submission to update trade details
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const token = localStorage.getItem('token');
+        const data = new FormData();
 
-        const formData = new FormData();
-        formData.append('currency_pair', currencyPair);
-        formData.append('trade_signal', tradeSignal);
-        formData.append('is_active', isActive);
-        if (ideaCandle) formData.append('idea_candle', ideaCandle);
-        if (lineGraphCandle) formData.append('line_graph_candle', lineGraphCandle);
-        if (signalCandle) formData.append('signal_candle', signalCandle);
-        if (hourCandle) formData.append('hour_candle', hourCandle);
-        if (entryCandle) formData.append('entry_candle', entryCandle);
-        if (takeProfitOneCandle) formData.append('take_profit_one_candle', takeProfitOneCandle);
-        if (takeProfitTwoCandle) formData.append('take_profit_two_candle', takeProfitTwoCandle);
+        // Append only the fields that are present and should be updated
+        for (const key in formData) {
+            if (formData[key]) {
+                data.append(key, formData[key]);  // Append only valid File objects or values
+            }
+        }
 
         try {
-            const token = localStorage.getItem('token');
-            await axios.put(`http://127.0.0.1:8000/api/tradedetails/tradedetails/${tradeId}/`, formData, {
+            await axios.put(`http://127.0.0.1:8000/api/tradedetails/tradedetails/${id}/`, data, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    'Content-Type': 'multipart/form-data', // this can be omitted as Axios sets it automatically
                     Authorization: `Bearer ${token}`,
                 },
             });
-            alert('Trade details updated successfully!');
+            onClose();
         } catch (error) {
-            console.error('Error updating trade details:', error);
-            alert('Error updating trade details.');
+            console.error('Error updating trade detail:', error);
+
+            if (error.response) {
+                console.error('Response data:', error.response.data);
+                if (error.response.status === 400) {
+                    alert('Bad Request: ' + JSON.stringify(error.response.data));
+                } else {
+                    alert('An error occurred: ' + error.response.status);
+                }
+            } else if (error.request) {
+                alert('No response received from the server.');
+            } else {
+                alert('Error: ' + error.message);
+            }
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} style={styles.form}>
-            <h2>Edit Trade Details</h2>
-            <label>
-                Currency Pair:
-                <input
-                    type="text"
-                    value={currencyPair}
-                    onChange={(e) => setCurrencyPair(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Trade Signal:
-                <select
-                    value={tradeSignal}
-                    onChange={(e) => setTradeSignal(e.target.value)}
-                    required
-                >
-                    <option value="">Select</option>
-                    <option value="BUYS">Buy</option>
-                    <option value="SELLS">Sell</option>
-                </select>
-            </label>
+        <div className="modal-overlay">
+            <div className="modal-content">
+                <form onSubmit={handleSubmit} className="trade-details-form">
+                    <h2>Edit Trade Detail</h2>
 
-            <label>
-                <input
-                    type="checkbox"
-                    checked={isActive}
-                    onChange={(e) => setIsActive(e.target.checked)}
-                />
-                Is Active
-            </label>
+                    <div className="form-grid">
+                        <div className="form-group">
+                            <label>Currency Pair</label>
+                            <input
+                                type="text"
+                                name="currency_pair"
+                                value={formData.currency_pair}
+                                onChange={handleChange}
+                            />
+                        </div>
 
-            <h3>Update Candles (Optional)</h3>
+                        <div className="form-group">
+                            <label>Trade Signal</label>
+                            <select name="trade_signal" value={formData.trade_signal} onChange={handleChange}>
+                                <option value="">Select Signal</option>
+                                <option value="BUYS">BUYS</option>
+                                <option value="SELLS">SELLS</option>
+                            </select>
+                        </div>
 
-            <label>
-                Idea Candle:
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setIdeaCandle(e.target.files[0])}
-                />
-            </label>
+                        <div className="form-group">
+                            <label>Active</label>
+                            <input
+                                type="checkbox"
+                                name="is_active"
+                                checked={formData.is_active}
+                                onChange={handleChange}
+                            />
+                        </div>
 
-            <label>
-                Line Graph Candle:
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setLineGraphCandle(e.target.files[0])}
-                />
-            </label>
+                        {/* Image fields */}
+                        {['idea_candle', 'line_graph_candle', 'signal_candle', 'hour_candle', 'two_hour_candle', 'entry_candle', 'breakeven_candle', 'take_profit_one_candle', 'take_profit_two_candle'].map((field) => (
+                            <div className="form-group" key={field}>
+                                <label>{field.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase())}</label>
+                                <input type="file" name={field} onChange={handleChange} />
+                            </div>
+                        ))}
+                    </div>
 
-            <label>
-                Signal Candle:
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setSignalCandle(e.target.files[0])}
-                />
-            </label>
-
-            <label>
-                Hour Candle:
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setHourCandle(e.target.files[0])}
-                />
-            </label>
-
-            <label>
-                Entry Candle:
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setEntryCandle(e.target.files[0])}
-                />
-            </label>
-
-            <label>
-                Take Profit 1 Candle:
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setTakeProfitOneCandle(e.target.files[0])}
-                />
-            </label>
-
-            <label>
-                Take Profit 2 Candle:
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setTakeProfitTwoCandle(e.target.files[0])}
-                />
-            </label>
-
-            <button type="submit" style={styles.button}>
-                Update Trade Details
-            </button>
-        </form>
+                    <div className="form-buttons">
+                        <button type="submit">Save Changes</button>
+                        <button type="button" onClick={onClose}>Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     );
 };
 
-// CSS-in-JS styling
-const styles = {
-    form: {
-        maxWidth: '600px',
-        margin: '0 auto',
-        padding: '20px',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        backgroundColor: '#f9f9f9',
-    },
-    button: {
-        marginTop: '10px',
-        padding: '10px 15px',
-        backgroundColor: '#007bff',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '4px',
-        cursor: 'pointer',
-    },
-};
-
-export default EditTradeDetails;
+export default EditTradeDetailsForm;

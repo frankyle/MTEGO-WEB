@@ -23,10 +23,10 @@ export const nav = [
     text: "contact",
     path: "/contact",
   },
-  {
-    text: "Dash",
-    path: "/mtego",
-  },
+  // {
+  //   text: "Dash",
+  //   path: "/mtego",
+  // },
 ]
 export const featured = [
   {

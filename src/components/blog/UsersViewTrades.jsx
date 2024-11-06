@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typog
 import CloseIcon from '@mui/icons-material/Close';
 import './TradeDetailsTable.css';
 
-const TradeDetailsTable = () => {
+const UsersViewTrades = () => {
     const [tradeDetails, setTradeDetails] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -50,7 +50,7 @@ const TradeDetailsTable = () => {
         marginBottom: '20px' // Optional, for some space below the heading
     }}
 >
-    TRADE DETAILS
+    THESE ARE THE TRADES THAT HAVE BEEN TAKEN THIS WEEK
 </Typography>
     <TableContainer className="table-container">
                 <Table>
@@ -60,7 +60,6 @@ const TradeDetailsTable = () => {
                         <TableCell>Trade Signal</TableCell>
                         <TableCell>Status</TableCell>
                         <TableCell>Created At</TableCell>
-                        <TableCell>Idea Candle</TableCell>
                         <TableCell>Line Graph Candle</TableCell>
                         <TableCell>Signal Candle</TableCell>
                         <TableCell>Hour Candle</TableCell>
@@ -80,14 +79,7 @@ const TradeDetailsTable = () => {
                                 <TableCell className="cell">{trade.trade_signal || '-'}</TableCell>
                                 <TableCell className="cell">{trade.is_active ? 'Active' : 'Inactive'}</TableCell>
                                 <TableCell className="cell">{new Date(trade.created_at).toLocaleDateString()}</TableCell>
-                                <TableCell className="cell">
-                                    <img
-                                        src={trade.idea_candle}
-                                        alt="Idea Candle"
-                                        className="image"
-                                        onClick={() => handleImageClick(trade.idea_candle)}
-                                    />
-                                </TableCell>
+                                
                                 <TableCell className="cell">
                                     <img
                                         src={trade.line_graph_candle}
@@ -195,4 +187,4 @@ const TradeDetailsTable = () => {
     );
 };
 
-export default TradeDetailsTable;
+export default UsersViewTrades;
