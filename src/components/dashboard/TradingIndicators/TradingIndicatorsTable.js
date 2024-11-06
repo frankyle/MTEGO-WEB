@@ -37,8 +37,6 @@ const TradingIndicatorsTable = () => {
     return (
         <div style={styles.container}>
             <h1 style={styles.heading}>INDICATORS CONFIRMATIONS</h1>
-            <button style={styles.addButton} onClick={handleAddButtonClick}>Add Trading Indicator</button>
-            {showAddForm && <AddTradingIndicator onClose={handleFormClose} />} {/* Show the form when needed */}
             <table style={styles.table}>
                 <thead>
                     <tr>

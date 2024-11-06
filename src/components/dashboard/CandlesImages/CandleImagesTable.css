@@ -1,0 +1,56 @@
+/* TradeDetailsTable.css */
+
+.container {
+    width: 90%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.heading {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.table-container {
+    max-height: 500px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
+.table-head {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.cell {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.image {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}

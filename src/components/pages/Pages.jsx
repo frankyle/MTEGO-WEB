@@ -11,6 +11,8 @@ import Contact from "../contact/Contact"
 import Login from "../Auth/Login"
 import Register from "../Auth/Register"
 import Dashboard from "../dashboard/Dashboard"
+import AddTradeDetailsForm from "../dashboard/TradeDetails/AddTradeDetailsForm"
+import EditTradeDetailsForm from "../dashboard/TradeDetails/EditTradeDetailsForm"
 
 const Pages = () => {
   return (
@@ -27,6 +29,9 @@ const Pages = () => {
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
           <Route exact path='/mtego' component={Dashboard} />
+          <Route exact path="/mtego/add-trade" element={<AddTradeDetailsForm />} />
+          <Route exact path="/mtego/edit-trade/:tradeId" element={<EditTradeDetailsForm />} />
+          
         </Switch>
         <Footer />
       </Router>
