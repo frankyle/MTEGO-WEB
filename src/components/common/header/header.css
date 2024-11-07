@@ -1,90 +1,41 @@
-header {
-  background-color: #fff;
+/* AppBar Styling */
+.appbar {
+  background-color: #27ae60;
   height: 10vh;
-  box-shadow: 0 5px 30px rgb(0 22 84 / 10%);
+  box-shadow: 0 5px 15px rgba(0, 22, 84, 0.1);
   padding: 15px 0;
-  position: sticky;
-  top: 0;
-  z-index: 99999;
-}
-header img {
-  width: 170px;
-}
-header a {
-  margin-left: 30px;
-  transition: 0.5s;
-  font-weight: 500;
-}
-header a:hover {
-  color: #27ae60;
-}
-header span {
-  width: auto;
-  padding: 0px 6px;
-  background: #27ae60;
-  border-radius: 50px;
-  color: #ffffff;
-  margin-right: 4px;
-  font-weight: 400;
-}
-header h4 {
-  font-weight: 500;
-  margin-right: 20px;
-}
-header .toggle {
-  display: none;
 }
 
-
-@media screen and (max-width: 768px) {
-  header {
-    padding: 0;
-  }
-  header img {
-    margin-top: 30px;
-  }
-  header .button {
-    display: none;
-  }
-  header .nav .flex {
-    display: none;
-  }
-  header .toggle {
-    display: block;
-    margin-top: 20px;
-  }
-  header .small {
-    position: absolute;
-    top: 10vh;
-    left: 0;
-    width: 100%;
-    background-color: #27ae60;
-    padding: 20px;
-  }
-  header li a {
-    display: inline-block;
-    margin-bottom: 20px;
-    color: #fff;
-  }
+/* Logo Highlight Styling */
+.logo-highlight {
+  color: #FFEB3B; /* Bright yellow color for the MGI part of the logo */
 }
 
-.btn1 {
-  background-color: #27ae60; /* Google's blue */
-  border: none;
+/* Drawer Sidebar */
+.MuiDrawer-paper {
+  background-color: #2E7D32;
+  color: #fff;
+}
+
+/* Navigation Link Styling */
+.nav-link {
   color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  margin-right: 16px;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #FFEB3B;
   cursor: pointer;
-  border-radius: 33px;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease-in-out;
 }
 
-.btn1:hover {
-  background-color: #357ae0; /* Darker blue on hover */
+/* Logout Button Styling */
+.logout-button {
+  color: white;
+  background-color: red;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
 }
-
