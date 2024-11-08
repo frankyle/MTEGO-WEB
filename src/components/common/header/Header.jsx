@@ -10,13 +10,14 @@ import {
   ListItemText,
   Link as MuiLink,
   Box,
-  Divider
+  Divider,
+  Button
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useHistory } from "react-router-dom";
-import "./header.css"; // Custom CSS file for additional styling
-import { nav } from '../../data/Data'; // Import nav links data
+import "./header.css";
+import { nav } from '../../data/Data';
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -31,7 +32,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
-    history.push("/"); // Redirect to home after logout
+    history.push("/");
   };
 
   const handleDrawerToggle = () => {
@@ -136,7 +137,7 @@ const Header = () => {
           aria-label="open drawer"
           edge="start"
           onClick={handleDrawerToggle}
-          sx={{ mr: 2, display: { xs: "block", md: "none" } }}
+          sx={{ mr: 2 }}
         >
           <MenuIcon />
         </IconButton>
@@ -144,11 +145,11 @@ const Header = () => {
           variant="h6"
           noWrap
           component="div"
-          sx={{ display: { xs: "none", md: "flex" }, fontWeight: "bold" }}
+          sx={{ display: "flex", fontWeight: "bold" }}
         >
           <span className="logo-highlight">MGI</span> CANDLES
         </Typography>
-        <Box sx={{ display: { xs: "none", md: "flex" }, flexGrow: 1, ml: 3 }}>
+        <Box sx={{ display: { xs: "none", md: "flex" }, flexGrow: 1, justifyContent: 'center', ml: 3 }}>
           {nav.map((list, index) => (
             <MuiLink
               key={index}
@@ -167,23 +168,25 @@ const Header = () => {
             </MuiLink>
           ))}
         </Box>
-        <Box>
+        <Box sx={{ marginLeft: "auto" }}>
           {!isLoggedIn ? (
             <>
-              <MuiLink
+              <Button
                 onClick={() => history.push("/login")}
+                variant="outlined"
                 color="inherit"
-                sx={{ fontWeight: 'bold', mx: 1, cursor: 'pointer' }}
+                sx={{ fontWeight: 'bold', mx: 1, borderRadius: '18px' }}
               >
                 Login
-              </MuiLink>
-              <MuiLink
+              </Button>
+              <Button
                 onClick={() => history.push("/register")}
-                color="inherit"
-                sx={{ fontWeight: 'bold', mx: 1, cursor: 'pointer' }}
+                variant="contained"
+                color="primary"
+                sx={{ fontWeight: 'bold', mx: 1, borderRadius: '18px' }}
               >
                 Register
-              </MuiLink>
+              </Button>
             </>
           ) : (
             <IconButton
