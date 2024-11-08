@@ -18,6 +18,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useHistory } from "react-router-dom";
 import "./header.css";
 import { nav } from '../../data/Data';
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -142,13 +143,14 @@ const Header = () => {
           <MenuIcon />
         </IconButton>
         <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ display: "flex", fontWeight: "bold" }}
-        >
-          <span className="logo-highlight">MGI</span> CANDLES
-        </Typography>
+            variant="h6"
+            noWrap
+            component={Link} 
+            to="/"
+            sx={{ display: "flex", fontWeight: "bold", textDecoration: "none", color: "inherit" }}
+          >
+            <span className="logo-highlight">MGI</span> CANDLES
+          </Typography>
         <Box sx={{ display: { xs: "none", md: "flex" }, flexGrow: 1, justifyContent: 'center', ml: 3 }}>
           {nav.map((list, index) => (
             <MuiLink
