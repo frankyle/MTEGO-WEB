@@ -2,11 +2,13 @@ import React from "react"
 import Heading from "../../common/Heading"
 import "./hero.css"
 
+
 const Hero = () => {
   return (
     <>
       <section className='hero'>
         <div className='container'>
+          
           <Heading title='Learn how to trade Pips not Dollas' subtitle='Master forex trading with  tutorials and real-time signals.' />
 
           <form className='flex'>
@@ -27,6 +29,8 @@ const Hero = () => {
               <i className='fa fa-search'></i>
             </button>
           </form>
+
+          
         </div>
       </section>
     </>

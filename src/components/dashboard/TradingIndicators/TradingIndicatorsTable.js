@@ -10,7 +10,8 @@ const TradingIndicatorsTable = () => {
         const fetchTradingIndicators = async () => {
             try {
                 const token = localStorage.getItem('token'); // Retrieve token from storage
-                const response = await axios.get('http://127.0.0.1:8000/api/tradingindicators/tradingindicators/', {
+                const response = await axios.get('https://auth-django-85a2671276ca.herokuapp.com/api/tradingindicators/tradingindicators/',{
+                
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
