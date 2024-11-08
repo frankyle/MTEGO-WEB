@@ -129,7 +129,7 @@ export const awards = [
   },
   {
     icon: <i class='fa-solid fa-heart'></i>,
-    num: "850+ Pips",
+    num: "700+ Pips",
     name: "Weekly Pips Catches",
   },
 ];
@@ -231,12 +231,12 @@ export const team = [
 export const price = [
   {
     plan: "Basic",
-    price: "9",
+    price: "15",
     ptext: "per user, per month",
     list: [
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "5 Forex Signals per Week",
+        text: "10 Forex Signals per Week",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
@@ -261,12 +261,12 @@ export const price = [
   {
     best: "Best Value",
     plan: "Standard",
-    price: "18",
+    price: "25",
     ptext: "per user, per month",
     list: [
       {
         icon: <i class='fa-solid fa-check'></i>,
-        text: "10 Forex Signals per Week",
+        text: "15 Forex Signals per Week",
       },
       {
         icon: <i class='fa-solid fa-check'></i>,
@@ -289,7 +289,7 @@ export const price = [
   },
   {
     plan: "Platinum",
-    price: "35",
+    price: "40",
     ptext: "per users, per month",
     list: [
       {
