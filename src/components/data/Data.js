@@ -1,14 +1,14 @@
 export const nav = [
   {
-    text: "home",
+    text: "Home",
     path: "/",
   },
   {
-    text: "about",
+    text: "About",
     path: "/about",
   },
   {
-    text: "services",
+    text: "Services",
     path: "/services",
   },
   {
@@ -20,7 +20,7 @@ export const nav = [
     path: "/pricing",
   },
   {
-    text: "contact",
+    text: "Contact Us",
     path: "/contact",
   },
   // {
