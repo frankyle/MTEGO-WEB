@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AddTradingIndicator from './AddTradingIndicator'; // Import the new component
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper } from '@mui/material';
 
 const TradingIndicatorsTable = () => {
     const [tradingIndicators, setTradingIndicators] = useState([]);
@@ -10,8 +11,7 @@ const TradingIndicatorsTable = () => {
         const fetchTradingIndicators = async () => {
             try {
                 const token = localStorage.getItem('token'); // Retrieve token from storage
-                const response = await axios.get('https://auth-django-85a2671276ca.herokuapp.com/api/tradingindicators/tradingindicators/',{
-                
+                const response = await axios.get('http://127.0.0.1:8000/api/tradingindicators/tradingindicators/', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -25,9 +25,6 @@ const TradingIndicatorsTable = () => {
         fetchTradingIndicators();
     }, []);
 
-    const handleAddButtonClick = () => {
-        setShowAddForm(true);
-    };
 
     const handleFormClose = () => {
         setShowAddForm(false);
@@ -36,92 +33,71 @@ const TradingIndicatorsTable = () => {
     };
 
     return (
-        <div style={styles.container}>
-            <h1 style={styles.heading}>INDICATORS CONFIRMATIONS</h1>
-            <table style={styles.table}>
-                <thead>
-                    <tr>
-                        <th style={styles.th}>Currency Pair</th>
-                        <th style={styles.th}>Candle Pattern</th>
-                        <th style={styles.th}>Fibonacci Level</th>
-                        <th style={styles.th}>Session</th>
-                        <th style={styles.th}>5 Min Order Block</th>
-                        <th style={styles.th}>Previous Day Color Structure</th>
-                        <th style={styles.th}>Asian Kill Zone</th>
-                        <th style={styles.th}>London Kill Zone</th>
-                        <th style={styles.th}>New York Kill Zone</th>
-                        <th style={styles.th}>Flip Four Hour Candle</th>
-                        <th style={styles.th}>15 Min Break of Structure</th>
-                        <th style={styles.th}>FVG Blocks</th>
-                        <th style={styles.th}>Change Color UT Alert</th>
-                        <th style={styles.th}>Flactial and Alligator</th>
-                        <th style={styles.th}>Pips Stop Loss</th>
-                        <th style={styles.th}>Pips Gained</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tradingIndicators.map((indicator) => (
-                        <tr key={indicator.id}>
-                            <td style={styles.td}>{indicator.currency_pair || '-'}</td>
-                            <td style={styles.td}>{indicator.candle_pattern || '-'}</td>
-                            <td style={styles.td}>{indicator.fibonacci_level || '-'}</td>
-                            <td style={styles.td}>{indicator.session || '-'}</td>
-                            <td style={styles.td}>{indicator.five_min_order_block ? 'Yes' : 'No'}</td>
-                            <td style={styles.td}>{indicator.previous_day_color_structure ? 'Yes' : 'No'}</td>
-                            <td style={styles.td}>{indicator.asian_kill_zone ? 'Yes' : 'No'}</td>
-                            <td style={styles.td}>{indicator.london_kill_zone ? 'Yes' : 'No'}</td>
-                            <td style={styles.td}>{indicator.newyork_kill_zone ? 'Yes' : 'No'}</td>
-                            <td style={styles.td}>{indicator.flip_four_hour_candle ? 'Yes' : 'No'}</td>
-                            <td style={styles.td}>{indicator.fifteen_min_break_of_structure ? 'Yes' : 'No'}</td>
-                            <td style={styles.td}>{indicator.fvg_blocks ? 'Yes' : 'No'}</td>
-                            <td style={styles.td}>{indicator.change_color_ut_alert ? 'Yes' : 'No'}</td>
-                            <td style={styles.td}>{indicator.flactial_and_alligator ? 'Yes' : 'No'}</td>
-                            <td style={styles.td}>{indicator.pips_stoplost || '0'}</td>
-                            <td style={styles.td}>{indicator.pips_gained || '0'}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <div style={{ padding: '20px' }}>
+            <Typography variant="h4" gutterBottom align="center">
+                Indicators Confirmations
+            </Typography>
+            
+
+            {/* Table container */}
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="trading indicators table">
+                    <TableHead>
+                        <TableRow>
+                            {[
+                                "Currency Pair",
+                                "Candle Pattern",
+                                "Fibonacci Level",
+                                "Session",
+                                "5 Min Order Block",
+                                "Previous Day Color Structure",
+                                "Asian Kill Zone",
+                                "London Kill Zone",
+                                "New York Kill Zone",
+                                "Flip Four Hour Candle",
+                                "15 Min Break of Structure",
+                                "FVG Blocks",
+                                "Change Color UT Alert",
+                                "Flactial and Alligator",
+                                "Pips Stop Loss",
+                                "Pips Gained"
+                            ].map((header, index) => (
+                                <TableCell key={index} align="center" style={{ fontWeight: 'bold' }}>
+                                    {header}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {tradingIndicators.map((indicator) => (
+                            <TableRow key={indicator.id}>
+                                <TableCell align="center">{indicator.currency_pair || '-'}</TableCell>
+                                <TableCell align="center">{indicator.candle_pattern || '-'}</TableCell>
+                                <TableCell align="center">{indicator.fibonacci_level || '-'}</TableCell>
+                                <TableCell align="center">{indicator.session || '-'}</TableCell>
+                                <TableCell align="center">{indicator.five_min_order_block ? 'Yes' : 'No'}</TableCell>
+                                <TableCell align="center">{indicator.previous_day_color_structure ? 'Yes' : 'No'}</TableCell>
+                                <TableCell align="center">{indicator.asian_kill_zone ? 'Yes' : 'No'}</TableCell>
+                                <TableCell align="center">{indicator.london_kill_zone ? 'Yes' : 'No'}</TableCell>
+                                <TableCell align="center">{indicator.newyork_kill_zone ? 'Yes' : 'No'}</TableCell>
+                                <TableCell align="center">{indicator.flip_four_hour_candle ? 'Yes' : 'No'}</TableCell>
+                                <TableCell align="center">{indicator.fifteen_min_break_of_structure ? 'Yes' : 'No'}</TableCell>
+                                <TableCell align="center">{indicator.fvg_blocks ? 'Yes' : 'No'}</TableCell>
+                                <TableCell align="center">{indicator.change_color_ut_alert ? 'Yes' : 'No'}</TableCell>
+                                <TableCell align="center">{indicator.flactial_and_alligator ? 'Yes' : 'No'}</TableCell>
+                                <TableCell align="center">{indicator.pips_stoplost || '0'}</TableCell>
+                                <TableCell align="center">{indicator.pips_gained || '0'}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
+            {showAddForm && (
+                <AddTradingIndicator handleClose={handleFormClose} />
+            )}
         </div>
     );
-};
-
-// CSS-in-JS styling
-const styles = {
-    container: {
-        width: '90%',
-        margin: '0 auto',
-        textAlign: 'center',
-    },
-    heading: {
-        margin: '20px 0',
-        fontSize: '24px',
-    },
-    addButton: {
-        marginBottom: '20px',
-        padding: '10px 20px',
-        fontSize: '16px',
-        backgroundColor: '#4CAF50',
-        color: 'white',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer',
-    },
-    table: {
-        width: '100%',
-        borderCollapse: 'collapse',
-        marginTop: '20px',
-    },
-    th: {
-        padding: '12px',
-        border: '1px solid #ddd',
-        backgroundColor: '#f2f2f2',
-        fontWeight: 'bold',
-    },
-    td: {
-        padding: '12px',
-        border: '1px solid #ddd',
-    },
 };
 
 export default TradingIndicatorsTable;

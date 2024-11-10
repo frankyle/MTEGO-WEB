@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-    Typography, Modal, IconButton
+    Typography, Modal, IconButton, Button
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import AddCandleImage from './AddCandleImage';
@@ -18,8 +18,8 @@ const CandleImagesTable = () => {
         const fetchCandleImages = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('https://auth-django-85a2671276ca.herokuapp.com/api/candleimages/candleimages/',{
-                       headers: {
+                const response = await axios.get('http://127.0.0.1:8000/api/candleimages/candleimages/', {
+                    headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
@@ -32,16 +32,6 @@ const CandleImagesTable = () => {
         fetchCandleImages();
     }, []);
 
-    const handleAddButtonClick = () => {
-        setShowAddForm(true);
-    };
-
-    const handleFormClose = () => {
-        setShowAddForm(false);
-        // Fetch candle images again after adding, if needed
-        // fetchCandleImages();
-    };
-
     const handleImageClick = (imageSrc) => {
         setSelectedImage(imageSrc);
         setOpenModal(true);
@@ -50,6 +40,11 @@ const CandleImagesTable = () => {
     const handleCloseModal = () => {
         setOpenModal(false);
         setSelectedImage(null);
+    };
+
+    const handleViewClick = (id) => {
+        // Navigate to detailed page (adjust URL as needed)
+        window.location.href = `/candleimages/${id}`;
     };
 
     return (
@@ -68,7 +63,7 @@ const CandleImagesTable = () => {
             >
                 CANDLE IMAGES
             </Typography>
-            {showAddForm && <AddCandleImage onClose={handleFormClose} />}
+            {showAddForm && <AddCandleImage onClose={() => setShowAddForm(false)} />}
             <TableContainer className="table-container">
                 <Table>
                     <TableHead className="table-head">
@@ -82,6 +77,7 @@ const CandleImagesTable = () => {
                             <TableCell>Saturday Candle</TableCell>
                             <TableCell>Sunday Candle</TableCell>
                             <TableCell>Swing Trade Candle</TableCell>
+                            <TableCell>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -151,6 +147,11 @@ const CandleImagesTable = () => {
                                         className="image"
                                         onClick={() => handleImageClick(candleImage.swing_trade_candle)}
                                     />
+                                </TableCell>
+                                <TableCell className="cell">
+                                    <Button variant="contained" color="primary" onClick={() => handleViewClick(candleImage.id)}>
+                                        View
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ))}

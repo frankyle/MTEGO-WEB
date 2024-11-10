@@ -11,18 +11,24 @@ export const nav = [
     text: "Services",
     path: "/services",
   },
-  {
-    text: "Our Trades",
-    path: "/blog",
-  },
+ 
   {
     text: "Membership",
     path: "/pricing",
   },
+  
+  {
+    text: "Won Trades",
+    path: "/blog",
+  },
+  {
+    text: "Signals",
+    path: "/signals",
+  },
   {
     text: "Contact Us",
     path: "/contact",
-  },
+  }, 
   // {
   //   text: "Dash",
   //   path: "/mtego",

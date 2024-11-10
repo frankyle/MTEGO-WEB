@@ -1,29 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Modal, IconButton, Button } from '@mui/material';
+import {
+    Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+    Typography, Modal, IconButton, Button
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import './TradeDetailsTable.css';
+import AddCandleImage from './AddCandleImage';
+import './CandleImagesTable.css';
 
-const TradeDetailsTable = () => {
-    const [tradeDetails, setTradeDetails] = useState([]);
-    const [openModal, setOpenModal] = useState(false);
+const CandleImagesTable = () => {
+    const [candleImages, setCandleImages] = useState([]);
+    const [showAddForm, setShowAddForm] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [openModal, setOpenModal] = useState(false);
 
     useEffect(() => {
-        const fetchTradeDetails = async () => {
+        const fetchCandleImages = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://127.0.0.1:8000/api/tradedetails/tradedetails/', {
+                const response = await axios.get('http://127.0.0.1:8000/api/candleimages/candleimages/', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                setTradeDetails(response.data);
+                setCandleImages(response.data);
             } catch (error) {
-                console.error("Error fetching trade details:", error);
+                console.error("Error fetching candle images:", error);
             }
         };
-        fetchTradeDetails();
+
+        fetchCandleImages();
     }, []);
 
     const handleImageClick = (imageSrc) => {
@@ -36,10 +42,9 @@ const TradeDetailsTable = () => {
         setSelectedImage(null);
     };
 
-    const handleViewDetails = (tradeId) => {
-        // Navigate to the detailed view page or open a modal with detailed info.
-        // Example: Redirect to a detailed page (assuming you have routing setup):
-        window.location.href = `/trade-all-details/${tradeId}`;
+    const handleViewClick = (id) => {
+        // Navigate to detailed page (adjust URL as needed)
+        window.location.href = `/candleimages/${id}`;
     };
 
     return (
@@ -56,113 +61,95 @@ const TradeDetailsTable = () => {
                     marginBottom: '20px'
                 }}
             >
-                TRADE DETAILS
+                CANDLE IMAGES
             </Typography>
+            {showAddForm && <AddCandleImage onClose={() => setShowAddForm(false)} />}
             <TableContainer className="table-container">
                 <Table>
                     <TableHead className="table-head">
                         <TableRow>
                             <TableCell>Currency Pair</TableCell>
-                            <TableCell>Trade Signal</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Created At</TableCell>
-                            <TableCell>Trade's Idea </TableCell>
-                            <TableCell>Line Graph Candle</TableCell>
-                            <TableCell>Setup Candle</TableCell>
-                            <TableCell>Hour Candle</TableCell>
-                            <TableCell>2 Hour Candle</TableCell>
-                            <TableCell>Entry Candle</TableCell>
-                            <TableCell>Breakeven Candle</TableCell>
-                            <TableCell>Take Profit 1</TableCell>
-                            <TableCell>Take Profit 2</TableCell>
-                            <TableCell>Actions</TableCell> {/* New column for actions */}
+                            <TableCell>Monday Candle</TableCell>
+                            <TableCell>Tuesday Candle</TableCell>
+                            <TableCell>Wednesday Candle</TableCell>
+                            <TableCell>Thursday Candle</TableCell>
+                            <TableCell>Friday Candle</TableCell>
+                            <TableCell>Saturday Candle</TableCell>
+                            <TableCell>Sunday Candle</TableCell>
+                            <TableCell>Swing Trade Candle</TableCell>
+                            <TableCell>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {tradeDetails.map((trade) => (
-                            <TableRow key={trade.id}>
-                                <TableCell className="cell">{trade.currency_pair || '-'}</TableCell>
-                                <TableCell className="cell">{trade.trade_signal || '-'}</TableCell>
-                                <TableCell className="cell">{trade.is_active ? 'Active' : 'Inactive'}</TableCell>
-                                <TableCell className="cell">{new Date(trade.created_at).toLocaleDateString()}</TableCell>
+                        {candleImages.map((candleImage) => (
+                            <TableRow key={candleImage.id}>
+                                <TableCell className="cell">{candleImage.currency_pair || '-'}</TableCell>
                                 <TableCell className="cell">
                                     <img
-                                        src={trade.idea_candle}
-                                        alt="Idea Candle"
+                                        src={candleImage.monday_candle}
+                                        alt="Monday Candle"
                                         className="image"
-                                        onClick={() => handleImageClick(trade.idea_candle)}
+                                        onClick={() => handleImageClick(candleImage.monday_candle)}
                                     />
                                 </TableCell>
                                 <TableCell className="cell">
                                     <img
-                                        src={trade.line_graph_candle}
-                                        alt="Line Graph Candle"
+                                        src={candleImage.tuesday_candle}
+                                        alt="Tuesday Candle"
                                         className="image"
-                                        onClick={() => handleImageClick(trade.line_graph_candle)}
+                                        onClick={() => handleImageClick(candleImage.tuesday_candle)}
                                     />
                                 </TableCell>
                                 <TableCell className="cell">
                                     <img
-                                        src={trade.signal_candle}
-                                        alt="Signal Candle"
+                                        src={candleImage.wednesday_candle}
+                                        alt="Wednesday Candle"
                                         className="image"
-                                        onClick={() => handleImageClick(trade.signal_candle)}
+                                        onClick={() => handleImageClick(candleImage.wednesday_candle)}
                                     />
                                 </TableCell>
                                 <TableCell className="cell">
                                     <img
-                                        src={trade.hour_candle}
-                                        alt="Hour Candle"
+                                        src={candleImage.thursday_candle}
+                                        alt="Thursday Candle"
                                         className="image"
-                                        onClick={() => handleImageClick(trade.hour_candle)}
+                                        onClick={() => handleImageClick(candleImage.thursday_candle)}
                                     />
                                 </TableCell>
                                 <TableCell className="cell">
                                     <img
-                                        src={trade.two_hour_candle}
-                                        alt="2 Hour Candle"
+                                        src={candleImage.friday_candle}
+                                        alt="Friday Candle"
                                         className="image"
-                                        onClick={() => handleImageClick(trade.two_hour_candle)}
+                                        onClick={() => handleImageClick(candleImage.friday_candle)}
                                     />
                                 </TableCell>
                                 <TableCell className="cell">
                                     <img
-                                        src={trade.entry_candle}
-                                        alt="Entry Candle"
+                                        src={candleImage.saturday_candle}
+                                        alt="Saturday Candle"
                                         className="image"
-                                        onClick={() => handleImageClick(trade.entry_candle)}
+                                        onClick={() => handleImageClick(candleImage.saturday_candle)}
                                     />
                                 </TableCell>
                                 <TableCell className="cell">
                                     <img
-                                        src={trade.breakeven_candle}
-                                        alt="Breakeven Candle"
+                                        src={candleImage.sunday_candle}
+                                        alt="Sunday Candle"
                                         className="image"
-                                        onClick={() => handleImageClick(trade.breakeven_candle)}
+                                        onClick={() => handleImageClick(candleImage.sunday_candle)}
                                     />
                                 </TableCell>
                                 <TableCell className="cell">
                                     <img
-                                        src={trade.take_profit_one_candle}
-                                        alt="Take Profit 1"
+                                        src={candleImage.swing_trade_candle}
+                                        alt="Swing Trade Candle"
                                         className="image"
-                                        onClick={() => handleImageClick(trade.take_profit_one_candle)}
+                                        onClick={() => handleImageClick(candleImage.swing_trade_candle)}
                                     />
                                 </TableCell>
                                 <TableCell className="cell">
-                                    <img
-                                        src={trade.take_profit_two_candle}
-                                        alt="Take Profit 2"
-                                        className="image"
-                                        onClick={() => handleImageClick(trade.take_profit_two_candle)}
-                                    />
-                                </TableCell>
-                                <TableCell>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={() => handleViewDetails(trade.id)}
-                                    >
+                                    <Button variant="contained" color="primary" onClick={() => handleViewClick(candleImage.id)}>
                                         View
                                     </Button>
                                 </TableCell>
@@ -207,4 +194,4 @@ const TradeDetailsTable = () => {
     );
 };
 
-export default TradeDetailsTable;
+export default CandleImagesTable;
