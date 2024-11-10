@@ -51,8 +51,8 @@ const SinglePairDetails = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Idea Candle
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  1. Idea Candle
                 </Typography>
                 <Box>
                   <img src={tradeDetails.idea_candle} alt="Idea Candle" style={{ width: '100%', borderRadius: '8px' }} />
@@ -66,8 +66,8 @@ const SinglePairDetails = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Line Graph Candle
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  2. Line Graph Candle
                 </Typography>
                 <Box>
                   <img src={tradeDetails.line_graph_candle} alt="Line Graph Candle" style={{ width: '100%', borderRadius: '8px' }} />
@@ -82,8 +82,8 @@ const SinglePairDetails = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Signal Candle
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  3. Signal Candle
                 </Typography>
                 <Box>
                   <img src={tradeDetails.signal_candle} alt="Signal Candle" style={{ width: '100%', borderRadius: '8px' }} />
@@ -98,8 +98,8 @@ const SinglePairDetails = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Hour Candle
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  4. Hour Candle
                 </Typography>
                 <Box>
                   <img src={tradeDetails.hour_candle} alt="Hour Candle" style={{ width: '100%', borderRadius: '8px' }} />
@@ -114,8 +114,8 @@ const SinglePairDetails = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Two Hour Candle
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  5. Two Hour Candle
                 </Typography>
                 <Box>
                   <img src={tradeDetails.two_hour_candle} alt="Two Hour Candle" style={{ width: '100%', borderRadius: '8px' }} />
@@ -130,8 +130,8 @@ const SinglePairDetails = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Entry Candle
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  6. Entry Candle
                 </Typography>
                 <Box>
                   <img src={tradeDetails.entry_candle} alt="Entry Candle" style={{ width: '100%', borderRadius: '8px' }} />
@@ -146,8 +146,8 @@ const SinglePairDetails = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Breakeven Candle
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  7. Breakeven Candle
                 </Typography>
                 <Box>
                   <img src={tradeDetails.breakeven_candle} alt="Breakeven Candle" style={{ width: '100%', borderRadius: '8px' }} />
@@ -162,8 +162,8 @@ const SinglePairDetails = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Take Profit One Candle
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  8. Take Profit One Candle
                 </Typography>
                 <Box>
                   <img src={tradeDetails.take_profit_one_candle} alt="Take Profit One Candle" style={{ width: '100%', borderRadius: '8px' }} />
@@ -176,8 +176,8 @@ const SinglePairDetails = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Take Profit Two Candle
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  9. Take Profit Two Candle
                 </Typography>
                 <Box>
                   <img src={tradeDetails.take_profit_two_candle} alt="Take Profit Two Candle" style={{ width: '100%', borderRadius: '8px' }} />
