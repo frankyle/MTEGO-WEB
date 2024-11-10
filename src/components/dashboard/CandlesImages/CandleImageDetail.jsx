@@ -14,7 +14,9 @@ const CandleImageDetail = () => {
         const fetchCandleImage = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://127.0.0.1:8000/api/candleimages/candleimages/${id}/`, {
+                // const response = await axios.get(`http://127.0.0.1:8000/api/candleimages/candleimages/${id}/`, {
+                    const response = await axios.get(`https://auth-django-85a2671276ca.herokuapp.com/api/candleimages/candleimages/${id}/`, {
+                    
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
