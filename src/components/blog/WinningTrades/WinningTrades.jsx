@@ -19,7 +19,10 @@ const WinningTrades = () => {
     const fetchCandles = async () => {
       try {
         const token = localStorage.getItem('token'); // Retrieve token from localStorage
-        const response = await axios.get('http://127.0.0.1:8000/api/tradedetails/tradedetails/', {
+        const response = await axios.get('https://auth-django-85a2671276ca.herokuapp.com/api/tradedetails/tradedetails/', {
+          // const response = await axios.get('http://127.0.0.1:8000/api/tradedetails/tradedetails/', {
+
+          
           headers: {
             Authorization: `Bearer ${token}`,
           },

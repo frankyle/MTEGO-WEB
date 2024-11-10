@@ -33,8 +33,8 @@ const Register = () => {
 
     try {
 
-      // const response = await axios.post('https://auth-django-85a2671276ca.herokuapp.com/auth/users/', data, {
-        const response = await axios.post('http://127.0.0.1:8000/auth/users/', data, {
+      const response = await axios.post('https://auth-django-85a2671276ca.herokuapp.com/auth/users/', data, {
+        // const response = await axios.post('http://127.0.0.1:8000/auth/users/', data, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -43,8 +43,8 @@ const Register = () => {
       console.log('Registration Response:', response.data);
 
        // Get the token (if provided on registration) or authenticate to retrieve it
-    const tokenResponse = await axios.post('http://127.0.0.1:8000/auth/jwt/create/', {
-    // const tokenResponse = await axios.post('https://auth-django-85a2671276ca.herokuapp.com/auth/jwt/create/', {
+    // const tokenResponse = await axios.post('http://127.0.0.1:8000/auth/jwt/create/', {
+    const tokenResponse = await axios.post('https://auth-django-85a2671276ca.herokuapp.com/auth/jwt/create/', {
       email,
       password,
     });

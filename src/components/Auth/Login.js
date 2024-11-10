@@ -21,8 +21,8 @@ const UserLogin = () => {
     };
 
     try {
-      // const response = await axios.post('https://auth-django-85a2671276ca.herokuapp.com/auth/jwt/create/', data, {
-        const response = await axios.post('http://127.0.0.1:8000/auth/jwt/create/', data, {
+      const response = await axios.post('https://auth-django-85a2671276ca.herokuapp.com/auth/jwt/create/', data, {
+        // const response = await axios.post('http://127.0.0.1:8000/auth/jwt/create/', data, {
         headers: {
           'Content-Type': 'application/json',
         },
