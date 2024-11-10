@@ -8,8 +8,8 @@ const Price = () => {
     <>
       <section className='price padding'>
         <div className='container'>
-        <Back name='As a Guesture of good thanks' title='This is lke thanks in advance to different people in the company' cover={img} />
-        <PriceCard />
+          <Heading title='As a Guesture of good thanks' subtitle='This is lke thanks in advance to different people in the company' />
+          <PriceCard />
         </div>
       </section>
     </>
