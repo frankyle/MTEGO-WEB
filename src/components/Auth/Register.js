@@ -32,7 +32,9 @@ const Register = () => {
     };
 
     try {
-      const response = await axios.post('https://auth-django-85a2671276ca.herokuapp.com/auth/users/', data, {
+
+      // const response = await axios.post('https://auth-django-85a2671276ca.herokuapp.com/auth/users/', data, {
+        const response = await axios.post('http://127.0.0.1:8000/auth/users/', data, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -40,8 +42,18 @@ const Register = () => {
 
       console.log('Registration Response:', response.data);
 
+       // Get the token (if provided on registration) or authenticate to retrieve it
+    const tokenResponse = await axios.post('http://127.0.0.1:8000/auth/jwt/create/', {
+    // const tokenResponse = await axios.post('https://auth-django-85a2671276ca.herokuapp.com/auth/jwt/create/', {
+      email,
+      password,
+    });
+      // Save token
+      localStorage.setItem('token', tokenResponse.data.access);
+
+
       setSuccess('User registered successfully!');
-      history.push('/login');
+      history.push('/profile');
 
       setEmail('');
       setPassword('');
@@ -113,7 +125,7 @@ const Register = () => {
               style={styles.input}
             />
           </div>
-          <button type="submit" style={styles.button}>Register</button>
+          <button type="submit" style={styles.button}>REGISTER</button>
         </form>
         {error && <div style={styles.error}>{error}</div>}
         {success && <div style={styles.success}>{success}</div>}
@@ -171,7 +183,7 @@ const styles = {
     backgroundColor: '#007bff',
     color: '#fff',
     border: 'none',
-    borderRadius: '4px',
+    borderRadius: '18px',
     cursor: 'pointer',
     textAlign: 'center',
   },
