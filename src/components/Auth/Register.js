@@ -53,7 +53,7 @@ const Register = () => {
 
 
       setSuccess('User registered successfully!');
-      history.push('/profile');
+      history.push('/login');
 
       setEmail('');
       setPassword('');
