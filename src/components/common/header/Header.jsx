@@ -33,7 +33,7 @@ const Header = () => {
     if (token) {
       // If logged in, fetch user info (example: from API or local storage)
       const name = localStorage.getItem("userName"); // Example of how you might store the user's name
-      setUserName(name || "Trader"); // Fallback to "Trader" if no name is found
+      setUserName(name || "Hi Trader"); // Fallback to "Trader" if no name is found
     }
   }, []); // Empty dependency array means this runs once after the component mounts
 

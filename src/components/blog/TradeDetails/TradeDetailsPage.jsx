@@ -53,9 +53,10 @@ const TradeDetailsPage = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Setup Candle
-                </Typography>
+              <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                1. Setup Candle
+              </Typography>
+
                 <Box>
                   <img src={tradeDetails.signal_candle} alt="Signal Candle" style={{ width: '100%', borderRadius: '8px' }} />
                 </Box>
@@ -69,8 +70,8 @@ const TradeDetailsPage = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Hour Candle
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                 2. Hour Candle
                 </Typography>
                 <Box>
                   <img src={tradeDetails.hour_candle} alt="Hour Candle" style={{ width: '100%', borderRadius: '8px' }} />
@@ -85,8 +86,8 @@ const TradeDetailsPage = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Entry Candle
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  3. Entry Candle
                 </Typography>
                 <Box>
                   <img src={tradeDetails.entry_candle} alt="Entry Candle" style={{ width: '100%', borderRadius: '8px' }} />
@@ -101,8 +102,8 @@ const TradeDetailsPage = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Breakeven Candle
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  4. Breakeven Candle
                 </Typography>
                 <Box>
                   <img src={tradeDetails.breakeven_candle} alt="Breakeven Candle" style={{ width: '100%', borderRadius: '8px' }} />
@@ -117,8 +118,8 @@ const TradeDetailsPage = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Take Profit One Candle
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  5. Take Profit One Candle
                 </Typography>
                 <Box>
                   <img src={tradeDetails.take_profit_one_candle} alt="Take Profit One Candle" style={{ width: '100%', borderRadius: '8px' }} />
@@ -131,8 +132,8 @@ const TradeDetailsPage = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Take Profit Two Candle
+                <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                  6. Take Profit Two Candle
                 </Typography>
                 <Box>
                   <img src={tradeDetails.take_profit_two_candle} alt="Take Profit Two Candle" style={{ width: '100%', borderRadius: '8px' }} />

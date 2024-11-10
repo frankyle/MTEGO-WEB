@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom'; // To handle navigation
 import axios from 'axios';
 import Heading from "../../common/Heading";
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, Grid, Card, CardContent, CardMedia, Chip } from '@mui/material';
 
 const WinningTrades = () => {
   const [candles, setCandles] = useState([]);
@@ -20,9 +20,6 @@ const WinningTrades = () => {
       try {
         const token = localStorage.getItem('token'); // Retrieve token from localStorage
         const response = await axios.get('https://auth-django-85a2671276ca.herokuapp.com/api/tradedetails/tradedetails/', {
-          // const response = await axios.get('http://127.0.0.1:8000/api/tradedetails/tradedetails/', {
-
-          
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -60,11 +57,11 @@ const WinningTrades = () => {
           Log In
         </Button>
         <Button
-           onClick={() => history.push("/register")}
-           variant="contained"
-           color="primary"
-           sx={{ fontWeight: 'bold', mx: 1, borderRadius: '18px' }}
-         >
+          onClick={() => history.push("/register")}
+          variant="contained"
+          color="primary"
+          sx={{ fontWeight: 'bold', mx: 1, borderRadius: '18px' }}
+        >
           Register
         </Button>
       </div>
@@ -77,7 +74,7 @@ const WinningTrades = () => {
         title="Recent Profit Takes: Celebrating Successful Trades in the Forex Market"
         subtitle="Explore our recent trades that have achieved their take profits, showcasing the effectiveness of our proven strategies and signals."
       />
-      <div className="content grid3 mtop">
+      <Grid container spacing={4} justifyContent="center" style={{ padding: '20px' }}>
         {candles
           .filter((candle) => candle.take_profit_two_candle) // Only show items with a take profit candle image
           .sort((a, b) => b.is_active - a.is_active || new Date(b.created_at) - new Date(a.created_at)) // Sort by active status, then by creation date
@@ -85,70 +82,61 @@ const WinningTrades = () => {
           .map((candle, index) => {
             const { id, take_profit_two_candle, currency_pair, is_active, created_at } = candle;
             return (
-              <div className="box shadow" key={index}>
-                <div className="img">
-                  <img src={take_profit_two_candle} alt={currency_pair} />
-                </div>
-                <div className="text">
-                  <div className="category flex">
-                    <span
-                      style={{
-                        background: "#f0f0f0",
-                        color: "#333",
-                      }}
-                    >
-                      {currency_pair || "N/A"}
-                    </span>
-                    <div style={{ textAlign: "center", marginLeft: "10px" }}>
-                      <span
+              <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                <Card className="box shadow" style={{ maxWidth: '100%', borderRadius: '10px' }}>
+                  <CardMedia
+                    component="img"
+                    alt={currency_pair || 'Trade Image'}
+                    image={take_profit_two_candle}
+                    title={currency_pair || 'Trade Image'}
+                    style={{ height: '200px', objectFit: 'cover', borderRadius: '10px' }}
+                  />
+                  <CardContent>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Chip
+                        label={currency_pair || 'N/A'}
                         style={{
-                          color: is_active ? "green" : "gray",
-                          fontSize: "20px",
+                          background: "#f0f0f0",
+                          color: "#333",
+                          fontWeight: 'bold',
                         }}
-                      >
-                        {is_active ? "✔" : "✖"}
-                      </span>
-                      <p
+                      />
+                      <Chip
+                        label={is_active ? "Active" : "Inactive"}
                         style={{
-                          fontSize: "12px",
-                          color: is_active ? "green" : "gray",
-                          marginTop: "5px",
+                          background: is_active ? 'green' : 'gray',
+                          color: '#fff',
+                          fontSize: '14px',
+                          fontWeight: 'bold',
                         }}
-                      >
-                        {is_active ? "Active" : "Inactive"}
-                      </p>
+                      />
                     </div>
-                  </div>
-
-                  <p style={{ fontSize: "12px", color: "#888" }}>
-                    Created on: {new Date(created_at).toLocaleDateString()}
-                  </p>
-
-                  <p style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
-                    Today we took a risk of 36 Pips and achieved a profit of 36+ pips using the MGI Candles trading strategy.
-                    The risk-to-reward ratio was 1:1.
-                  </p>
-
-                  <button
-                    style={{
-                      marginTop: '15px',
-                      padding: '10px 20px',
-                      backgroundColor: '#007bff',
-                      color: '#fff',
-                      border: 'none',
-                      borderRadius: '25px',
-                      cursor: 'pointer',
-                      fontSize: '14px',
-                    }}
-                    onClick={() => handleLearnMore(id)} // Pass the id to navigate
-                  >
-                    Learn More
-                  </button>
-                </div>
-              </div>
+                    <Typography variant="body2" color="textSecondary" style={{ marginTop: '10px' }}>
+                      Created on: {new Date(created_at).toLocaleDateString()}
+                    </Typography>
+                    <Typography variant="body2" style={{ marginTop: '10px', fontSize: '14px', color: '#555' }}>
+                      Today we took a risk of 36 Pips and achieved a profit of 36+ pips using the MGI Candles trading strategy.
+                      The risk-to-reward ratio was 1:1.
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      style={{
+                        marginTop: '15px',
+                        fontWeight: 'bold',
+                        borderRadius: '25px',
+                      }}
+                      onClick={() => handleLearnMore(id)} // Pass the id to navigate
+                    >
+                      Learn More
+                    </Button>
+                  </CardContent>
+                </Card>
+              </Grid>
             );
           })}
-      </div>
+      </Grid>
     </>
   );
 };
