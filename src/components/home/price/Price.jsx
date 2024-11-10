@@ -8,7 +8,7 @@ const Price = () => {
     <>
       <section className='price padding'>
         <div className='container'>
-          <Heading title='As a Guesture of good thanks' subtitle='This is lke thanks in advance to different people in the company' />
+          <Heading title='As a Guesture of good thanks' subtitle='This is just like thanks in advance to different people in the company' />
           <PriceCard />
         </div>
       </section>
