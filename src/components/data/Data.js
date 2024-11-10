@@ -125,7 +125,7 @@ export const awards = [
   },
   {
     icon: <i class='fa-solid fa-briefcase'></i>,
-    num: "$100+",
+    num: "100+",
     name: "Beneficial traders",
   },
   {
